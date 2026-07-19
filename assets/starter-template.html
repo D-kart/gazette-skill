@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Findmymoat Style — Starter Template</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+Pro:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-bg: #FFFFFF;
+  --color-bg-paper: #FBFAF5;
+  --color-bg-rice: #F8F4ED;
+  --color-fg: #000000;
+  --color-muted: #6B6B6B;
+  --color-rule: #000000;
+  --color-rule-soft: #D9D5C8;
+  --color-accent: #000000;
+  --color-on-accent: #FFFFFF;
+  --color-up: #2E7D5B;
+  --color-down: #B23A3A;
+  /* For China finance: swap up/down above (red=up, green=down) */
+
+  --font-display: 'Playfair Display', 'Source Han Serif SC', 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  --font-body: 'Source Serif Pro', 'Source Han Serif SC', 'Noto Serif SC', 'Songti SC', serif;
+  --font-ui: -apple-system, 'Inter', 'PingFang SC', 'Source Han Sans SC', sans-serif;
+
+  --radius: 0px;
+  --max-w: 1280px;
+}
+
+[data-theme="dark"] {
+  --color-bg: #0F0F0F;
+  --color-bg-paper: #161616;
+  --color-bg-rice: #1A1814;
+  --color-fg: #F5F2EB;
+  --color-muted: #9C998F;
+  --color-rule: #F5F2EB;
+  --color-rule-soft: #2E2E2E;
+  --color-accent: #F5F2EB;
+  --color-on-accent: #0F0F0F;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+/* ---------- Theme toggle ---------- */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+  background: var(--color-bg);
+  border: 0.5px solid var(--color-rule);
+  color: var(--color-fg);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+.theme-toggle:hover { background: var(--color-fg); color: var(--color-bg); }
+
+/* ---------- Top nav ---------- */
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 16px 32px;
+  border-bottom: 0.5px solid var(--color-rule);
+  font-family: var(--font-ui);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.topnav .brand {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+.nav-links a {
+  font-size: 13px;
+  color: var(--color-fg);
+  text-decoration: none;
+}
+.nav-links a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.nav-actions { display: flex; gap: 8px; }
+
+/* ---------- Buttons ---------- */
+.btn-primary, .btn-secondary {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  text-decoration: none;
+  display: inline-block;
+  border: 1px solid var(--color-fg);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-primary { background: var(--color-accent); color: var(--color-on-accent); }
+.btn-primary:hover { opacity: 0.85; }
+.btn-secondary { background: transparent; color: var(--color-fg); }
+.btn-secondary:hover { background: var(--color-fg); color: var(--color-bg); }
+
+/* ---------- Masthead ---------- */
+.masthead {
+  text-align: center;
+  padding: 48px 24px 24px;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.masthead-rule {
+  height: 0.5px;
+  background: var(--color-rule);
+  margin: 0 auto;
+  max-width: 720px;
+}
+.masthead-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  color: var(--color-muted);
+  margin: 16px 0;
+}
+.masthead-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 7vw, 72px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 8px 0;
+  color: var(--color-fg);
+}
+.masthead-subtitle {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-fg);
+  margin: 12px 0 16px;
+}
+.masthead-datebar {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 10px 0;
+  margin: 16px 0;
+}
+.masthead-tags {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-fg);
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.masthead-tags .sep { color: var(--color-muted); }
+
+/* ---------- Home grid ---------- */
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  gap: 40px;
+  padding: 48px 32px;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.home-grid h2 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  letter-spacing: -0.01em;
+}
+.home-grid h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  letter-spacing: -0.01em;
+}
+.home-grid p {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0 0 1em;
+}
+.col-feature {
+  text-align: center;
+}
+.engraving {
+  color: var(--color-fg);
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto 24px;
+  display: block;
+}
+.search-row {
+  display: flex;
+  gap: 8px;
+}
+.search-row input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 0.5px solid var(--color-rule);
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+.mini-ranking {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-body);
+}
+.mini-ranking li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--color-rule-soft);
+  font-size: 14px;
+}
+.mini-ranking li:last-child { border-bottom: none; }
+.mini-ranking li .name { font-family: var(--font-body); }
+.mini-ranking li .votes {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-fg);
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .home-grid { grid-template-columns: 1fr; gap: 48px; }
+  .topnav { flex-wrap: wrap; gap: 16px; }
+  .nav-links { order: 3; width: 100%; flex-wrap: wrap; }
+}
+
+/* ---------- Footer ---------- */
+.footer { padding: 64px 32px 24px; max-width: var(--max-w); margin: 0 auto; }
+.footer-rule { height: 0.5px; background: var(--color-rule); margin-bottom: 32px; }
+.footer-inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+.footer-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 12px;
+}
+.footer-section p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-fg);
+  margin: 0;
+  line-height: 1.6;
+}
+.footer-section a {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-fg);
+  text-decoration: none;
+  padding: 4px 0;
+}
+.footer-section a:hover { text-decoration: underline; }
+.footer-bottom {
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--color-muted);
+  padding-top: 24px;
+  border-top: 0.5px solid var(--color-rule-soft);
+}
+@media (max-width: 700px) {
+  .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()">Day / Night</button>
+
+<nav class="topnav">
+  <a href="/" class="brand">FMM</a>
+  <ul class="nav-links">
+    <li><a href="#directory">Tool Directory</a></li>
+    <li><a href="#rankings">Top Tools</a></li>
+    <li><a href="#screeners">Screeners</a></li>
+    <li><a href="#moat">Moat Stocks</a></li>
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#deals">Deals</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#login" class="btn-secondary">Log in</a>
+    <a href="#signup" class="btn-primary">Create account</a>
+  </div>
+</nav>
+
+<header class="masthead">
+  <div class="masthead-rule"></div>
+  <div class="masthead-eyebrow">VOL. XCIV, NO. 247</div>
+  <h1 class="masthead-title">Find My Moat</h1>
+  <div class="masthead-subtitle">★ A CURATED DIRECTORY OF INVESTMENT RESEARCH TOOLS ★</div>
+  <div class="masthead-rule"></div>
+  <div class="masthead-datebar">SUNDAY, JULY 19, 2026</div>
+  <div class="masthead-tags">
+    <span>HUMAN-VETTED</span>
+    <span class="sep">·</span>
+    <span>READ BY 20,000+</span>
+    <span class="sep">·</span>
+    <span>UPDATED DAILY</span>
+  </div>
+</header>
+
+<section class="home-grid">
+  <div class="col-intro">
+    <h2>What is Find My Moat?</h2>
+    <p>A curated hub for investing tools, ranked lists, and stock research.</p>
+    <p>Discover investment research tools and stock analysis tools across categories, top lists, free lists, regions, and investor audiences. Compare pricing, coverage, platforms, votes, and filters at a glance.</p>
+    <p>Stars, Tested badges, and votes show what works for real investors.</p>
+  </div>
+
+  <div class="col-feature">
+    <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" class="engraving" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 140 L20 80 L40 80 L40 60 L60 60 L60 80 L80 80 L80 40 L100 40 L100 60 L120 60 L120 30 L140 30 L140 60 L160 60 L160 80 L180 80 L180 140 Z"/>
+        <path d="M40 100 L60 100 M80 100 L100 100 M120 100 L140 100 M80 120 L100 120 M120 120 L140 120"/>
+        <path d="M0 140 L200 140"/>
+        <path d="M100 30 L100 20 L105 20 L105 30"/>
+        <path d="M30 80 L30 60 M70 80 L70 40 M110 60 L110 30 M150 80 L150 60"/>
+      </g>
+    </svg>
+    <div class="search-row">
+      <input type="search" placeholder="Search tools, stocks, rankings...">
+      <a href="#" class="btn-primary">Search</a>
+    </div>
+  </div>
+
+  <div class="col-ranking">
+    <h3>Best Investing Tools</h3>
+    <ol class="mini-ranking">
+      <li><span class="name">CapEdge</span><span class="votes">+142</span></li>
+      <li><span class="name">GeminIQ</span><span class="votes">+98</span></li>
+      <li><span class="name">TipRanks</span><span class="votes">+87</span></li>
+      <li><span class="name">Stock Analysis</span><span class="votes">+76</span></li>
+      <li><span class="name">Simply Wall St</span><span class="votes">+64</span></li>
+      <li><span class="name">Finviz</span><span class="votes">+52</span></li>
+    </ol>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-rule"></div>
+  <div class="footer-inner">
+    <div class="footer-section">
+      <div class="footer-label">CURATION & ACCURACY</div>
+      <p>Human-vetted since 2024. Rankings updated daily. No paid placements.</p>
+    </div>
+    <div class="footer-section">
+      <div class="footer-label">CATEGORIES</div>
+      <a href="#screeners">Screeners</a>
+      <a href="#moat">Moat Stocks</a>
+      <a href="#collections">Collections</a>
+    </div>
+    <div class="footer-section">
+      <div class="footer-label">CONTRIBUTE</div>
+      <a href="#suggest" class="btn-secondary">Suggest a tool ↗</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 FIND MY MOAT</div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  try { localStorage.setItem('fmm-theme', next); } catch (e) {}
+}
+(function() {
+  try {
+    const saved = localStorage.getItem('fmm-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  } catch (e) {}
+})();
+</script>
+
+</body>
+</html>
