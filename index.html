@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPC-Studio — 看见每一个一人公司</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Playfair+Display:wght@700;900&family=Source+Serif+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-bg: #F8F4ED;
+  --color-bg-paper: #F3EFE7;
+  --color-bg-rice: #F8F4ED;
+  --color-fg: #000000;
+  --color-muted: #6B6B6B;
+  --color-rule: #000000;
+  --color-rule-soft: #D5CFC0;
+  --color-accent: #000000;
+  --color-on-accent: #FFFFFF;
+  --color-up: #B23A3A;
+  --color-down: #2E7D5B;
+  --color-tag-bg: #EEEAE1;
+
+  --font-display: 'Playfair Display', 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', serif;
+  --font-body: 'Source Serif Pro', 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', serif;
+  --font-ui: -apple-system, 'PingFang SC', 'Source Han Sans SC', 'Inter', sans-serif;
+
+  --radius: 0px;
+  --max-w: 1280px;
+}
+
+[data-theme="dark"] {
+  --color-bg: #12110C;
+  --color-bg-paper: #1A1814;
+  --color-bg-rice: #1A1814;
+  --color-fg: #F5F2EB;
+  --color-muted: #9C998F;
+  --color-rule: #F5F2EB;
+  --color-rule-soft: #2E2E2E;
+  --color-accent: #F5F2EB;
+  --color-on-accent: #12110C;
+  --color-tag-bg: #22201A;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+
+.theme-toggle {
+  position: fixed; top: 16px; right: 16px; z-index: 100;
+  background: var(--color-bg); border: 0.5px solid var(--color-rule);
+  color: var(--color-fg); font-family: var(--font-ui);
+  font-size: 11px; font-weight: 500; letter-spacing: 0.15em;
+  padding: 8px 14px; cursor: pointer;
+}
+.theme-toggle:hover { background: var(--color-fg); color: var(--color-bg); }
+
+.topnav {
+  display: flex; align-items: center; gap: 32px;
+  padding: 16px 32px; border-bottom: 0.5px solid var(--color-rule);
+  font-family: var(--font-ui); max-width: var(--max-w); margin: 0 auto;
+}
+.topnav .brand {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 20px; letter-spacing: -0.01em; color: var(--color-fg);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; flex: 1; }
+.nav-links a {
+  font-size: 13px; font-weight: 500; color: var(--color-fg); text-decoration: none;
+  letter-spacing: 0.05em;
+}
+.nav-links a:hover { text-decoration: underline; text-underline-offset: 6px; }
+.nav-actions { display: flex; gap: 10px; }
+
+.btn-primary, .btn-secondary {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.12em; padding: 9px 18px; text-decoration: none;
+  display: inline-block; border: 1px solid var(--color-fg);
+  cursor: pointer; transition: background 0.15s, color 0.15s;
+}
+.btn-primary { background: var(--color-accent); color: var(--color-on-accent); }
+.btn-primary:hover { opacity: 0.85; }
+.btn-secondary { background: transparent; color: var(--color-fg); }
+.btn-secondary:hover { background: var(--color-fg); color: var(--color-bg); }
+
+/* Masthead — ZH adapted */
+.masthead {
+  text-align: center; padding: 52px 24px 28px;
+  max-width: var(--max-w); margin: 0 auto;
+}
+.masthead-rule {
+  height: 0.5px; background: var(--color-rule); margin: 0 auto; max-width: 680px;
+}
+.masthead-eyebrow {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.3em; color: var(--color-muted); margin: 18px 0;
+}
+.masthead-title {
+  font-family: var(--font-display); font-size: clamp(44px, 7.5vw, 76px);
+  font-weight: 900; line-height: 1.08; letter-spacing: -0.01em;
+  margin: 10px 0; color: var(--color-fg);
+}
+.masthead-subtitle {
+  font-family: var(--font-body); font-size: 14px; font-weight: 400;
+  letter-spacing: 0.25em; color: var(--color-fg); margin: 14px 0 18px;
+}
+.masthead-datebar {
+  background: var(--color-accent); color: var(--color-on-accent);
+  font-family: var(--font-ui); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.22em; padding: 11px 0; margin: 18px 0;
+}
+.masthead-tags {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.2em; color: var(--color-fg);
+  display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 18px;
+}
+.masthead-tags .sep { color: var(--color-muted); }
+
+/* Three-column body */
+.home-grid {
+  display: grid; grid-template-columns: 1.05fr 1.3fr 1fr;
+  gap: 44px; padding: 52px 32px; max-width: var(--max-w); margin: 0 auto;
+}
+.home-grid h2 {
+  font-family: var(--font-display); font-size: 30px; font-weight: 900;
+  margin: 0 0 18px; letter-spacing: -0.01em; color: var(--color-fg);
+  line-height: 1.2;
+}
+.home-grid h3 {
+  font-family: var(--font-display); font-size: 18px; font-weight: 700;
+  margin: 0 0 14px; letter-spacing: -0.005em;
+}
+.home-grid p {
+  font-family: var(--font-body); font-size: 16px; line-height: 1.75; margin: 0 0 1.1em;
+  color: var(--color-fg);
+}
+
+.drop-cap::first-letter {
+  font-family: var(--font-display); font-weight: 900; font-size: 3em;
+  float: left; line-height: 0.95; margin: 0.04em 0.1em 0 0;
+  color: var(--color-fg);
+}
+
+.col-feature { text-align: center; }
+.engraving {
+  color: var(--color-fg); width: 100%; max-width: 280px;
+  margin: 0 auto 28px; display: block; opacity: 0.92;
+}
+
+.audience-chip {
+  display: inline-block; font-family: var(--font-ui); font-size: 11px;
+  font-weight: 500; letter-spacing: 0.15em; padding: 4px 10px;
+  border: 0.5px solid var(--color-rule); color: var(--color-fg);
+  background: var(--color-bg); margin: 0 4px 6px 0;
+}
+
+.mini-ranking {
+  list-style: none; padding: 0; margin: 0; counter-reset: sr;
+}
+.mini-ranking li {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 11px 0; border-bottom: 0.5px solid var(--color-rule-soft);
+  font-family: var(--font-body); font-size: 15px;
+}
+.mini-ranking li:last-child { border-bottom: none; }
+.mini-ranking li .idx {
+  font-family: var(--font-display); font-weight: 700; font-size: 13px;
+  color: var(--color-muted); width: 20px; flex-shrink: 0;
+}
+.mini-ranking li .name { flex: 1; font-family: var(--font-body); }
+.mini-ranking li .status {
+  font-family: var(--font-ui); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.1em; color: var(--color-muted); white-space: nowrap;
+}
+
+@media (max-width: 940px) {
+  .home-grid { grid-template-columns: 1fr; gap: 52px; }
+  .topnav { flex-wrap: wrap; gap: 16px; }
+  .nav-links { order: 3; width: 100%; flex-wrap: wrap; justify-content: space-between; }
+}
+
+/* Section divider */
+.section-divider { text-align: center; padding: 72px 0 0; max-width: var(--max-w); margin: 0 auto; }
+.section-divider-inner { display: flex; align-items: center; justify-content: center; gap: 20px; }
+.section-divider .rule { flex: 1; height: 0.5px; background: var(--color-rule); max-width: 180px; }
+.section-divider .label {
+  font-family: var(--font-body); font-size: 14px; font-weight: 400;
+  letter-spacing: 0.3em; color: var(--color-fg); white-space: nowrap;
+}
+.section-divider .sub {
+  font-family: var(--font-ui); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.18em; color: var(--color-muted); margin-top: 8px;
+}
+
+/* Skill cards grid */
+.skills-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px; padding: 36px 32px; max-width: var(--max-w); margin: 0 auto;
+}
+.skill-card {
+  background: var(--color-bg); border: 0.5px solid var(--color-rule-soft);
+  padding: 20px; transition: background 0.15s;
+}
+.skill-card:hover { background: var(--color-bg-paper); }
+.skill-card .sc-emoji { font-size: 24px; margin-bottom: 8px; display: block; }
+.skill-card .sc-name {
+  font-family: var(--font-display); font-size: 16px; font-weight: 700;
+  margin: 0 0 4px; color: var(--color-fg);
+}
+.skill-card .sc-cn {
+  font-family: var(--font-ui); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.08em; color: var(--color-muted); margin-bottom: 10px;
+}
+.skill-card .sc-desc {
+  font-family: var(--font-body); font-size: 13px; line-height: 1.65;
+  color: var(--color-fg); margin: 0 0 12px;
+}
+.skill-card .sc-badge {
+  font-family: var(--font-ui); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.12em; padding: 3px 8px;
+  border: 0.5px solid var(--color-rule); color: var(--color-muted);
+  display: inline-block;
+}
+
+@media (max-width: 860px) {
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .skills-grid { grid-template-columns: 1fr; }
+}
+
+/* PitchRoom section */
+.pitch-section {
+  padding: 0 32px; max-width: var(--max-w); margin: 0 auto 72px;
+}
+.pitch-intro {
+  max-width: 720px; margin: 0 auto; text-align: center;
+}
+.pitch-intro p {
+  font-family: var(--font-body); font-size: 16px; line-height: 1.75;
+  margin: 0 0 1em;
+}
+.pitch-table {
+  width: 100%; max-width: 720px; margin: 28px auto 0;
+  border-collapse: collapse;
+}
+.pitch-table th {
+  font-family: var(--font-ui); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.2em; color: var(--color-muted);
+  text-align: left; padding: 10px 12px 8px;
+  border-bottom: 1px solid var(--color-rule);
+}
+.pitch-table td {
+  font-family: var(--font-body); font-size: 14px; line-height: 1.55;
+  padding: 11px 12px; border-bottom: 0.5px solid var(--color-rule-soft);
+  color: var(--color-fg); vertical-align: top;
+}
+.pitch-table td:first-child { font-weight: 600; white-space: nowrap; }
+
+/* Footer */
+.footer { padding: 64px 32px 28px; max-width: var(--max-w); margin: 0 auto; }
+.footer-rule { height: 0.5px; background: var(--color-rule); margin-bottom: 36px; }
+.footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 52px; }
+.footer-label {
+  font-family: var(--font-ui); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.22em; color: var(--color-muted); margin-bottom: 14px;
+}
+.footer-section p {
+  font-family: var(--font-body); font-size: 14px; color: var(--color-fg);
+  margin: 0; line-height: 1.65;
+}
+.footer-section a {
+  display: block; font-family: var(--font-body); font-size: 14px;
+  color: var(--color-fg); text-decoration: none; padding: 5px 0;
+}
+.footer-section a:hover { text-decoration: underline; }
+.footer-bottom {
+  text-align: center; font-family: var(--font-ui); font-size: 11px;
+  letter-spacing: 0.15em; color: var(--color-muted);
+  padding-top: 28px; border-top: 0.5px solid var(--color-rule-soft);
+}
+@media (max-width: 700px) {
+  .footer-inner { grid-template-columns: 1fr; gap: 36px; }
+}
+
+/* ---------- Flywheel ---------- */
+.flywheel-container {
+  position: relative; width: 300px; height: 300px;
+  margin: 0 auto 20px;
+}
+.flywheel-svg { width: 100%; height: 100%; display: block; }
+
+.fw-ring-bg {
+  fill: none; stroke: var(--color-rule-soft); stroke-width: 0.5;
+}
+.fw-ring-spin {
+  fill: none; stroke: var(--color-fg); stroke-width: 1;
+  stroke-dasharray: 30 568;
+  transform-origin: 150px 150px;
+  animation: fw-ring-travel 6s linear infinite;
+}
+@keyframes fw-ring-travel {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.fw-edge {
+  fill: none; stroke: var(--color-fg); stroke-width: 0.6;
+  opacity: 0.3;
+}
+.fw-arrow {
+  fill: var(--color-fg); opacity: 0.35;
+}
+
+/* Sequential node pulse: 5 nodes over 5s cycle */
+.fw-node { transform-origin: center; }
+.fw-node-n0 circle { animation: fw-dot 5s ease-in-out 0s infinite; }
+.fw-node-n1 circle { animation: fw-dot 5s ease-in-out 1s infinite; }
+.fw-node-n2 circle { animation: fw-dot 5s ease-in-out 2s infinite; }
+.fw-node-n3 circle { animation: fw-dot 5s ease-in-out 3s infinite; }
+.fw-node-n4 circle { animation: fw-dot 5s ease-in-out 4s infinite; }
+@keyframes fw-dot {
+  0%, 44%, 100% { r: 4; stroke-width: 1; fill: var(--color-bg); }
+  8%, 36% { r: 7; stroke-width: 1.6; fill: var(--color-fg); }
+}
+
+.fw-node-n0 .fw-tag { animation: fw-show 5s ease-in-out 0s infinite; }
+.fw-node-n1 .fw-tag { animation: fw-show 5s ease-in-out 1s infinite; }
+.fw-node-n2 .fw-tag { animation: fw-show 5s ease-in-out 2s infinite; }
+.fw-node-n3 .fw-tag { animation: fw-show 5s ease-in-out 3s infinite; }
+.fw-node-n4 .fw-tag { animation: fw-show 5s ease-in-out 4s infinite; }
+@keyframes fw-show {
+  0%, 44%, 100% { opacity: 0; }
+  8%, 36% { opacity: 1; }
+}
+
+.fw-center circle { fill: var(--color-fg); }
+.fw-center-text {
+  font-family: var(--font-display); font-size: 18px; font-weight: 900;
+  fill: var(--color-on-accent); text-anchor: middle; dominant-baseline: central;
+}
+.fw-center-sub {
+  font-family: var(--font-ui); font-size: 9px; font-weight: 500;
+  fill: var(--color-on-accent); text-anchor: middle; dominant-baseline: central;
+  letter-spacing: 0.1em; opacity: 0.7;
+}
+
+.fw-label {
+  font-family: var(--font-ui); font-size: 11px; font-weight: 500;
+  fill: var(--color-fg); letter-spacing: 0.2em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-ring-spin { animation: none; }
+  .fw-node-n0 circle, .fw-node-n1 circle, .fw-node-n2 circle,
+  .fw-node-n3 circle, .fw-node-n4 circle { animation: none; r: 5; stroke-width: 1; }
+  .fw-node-n0 .fw-tag, .fw-node-n1 .fw-tag, .fw-node-n2 .fw-tag,
+  .fw-node-n3 .fw-tag, .fw-node-n4 .fw-tag { animation: none; opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()">明 亮 / 深 夜</button>
+
+<nav class="topnav">
+  <a href="/" class="brand">OPC-STUDIO</a>
+  <ul class="nav-links">
+    <li><a href="#showcase">企业展示</a></li>
+    <li><a href="#pitchroom">PitchRoom</a></li>
+    <li><a href="#aibox">AI 拆机器</a></li>
+    <li><a href="#skills">Skill 工坊</a></li>
+    <li><a href="#about">关于</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#join" class="btn-secondary">加入我们</a>
+    <a href="#pitch" class="btn-primary">投递项目</a>
+  </div>
+</nav>
+
+<header class="masthead">
+  <div class="masthead-rule"></div>
+  <div class="masthead-eyebrow">创 刊 号</div>
+  <h1 class="masthead-title">OPC-Studio</h1>
+  <div class="masthead-subtitle">★ 看见每一个一人公司 ★</div>
+  <div class="masthead-rule"></div>
+  <div class="masthead-datebar">二〇二六年七月二十日 · 星期一</div>
+  <div class="masthead-tags">
+    <span>大湾区 OPC 数据库</span>
+    <span class="sep">·</span>
+    <span>AI 原生平台</span>
+    <span class="sep">·</span>
+    <span>深度内容媒体</span>
+  </div>
+</header>
+
+<section class="home-grid">
+  <div class="col-intro">
+    <h2>什么是 OPC-Studio</h2>
+    <p class="drop-cap">AI 应用正在快速爆发，越来越多的创业者开始用 AI Agent 和自动化工具，完成过去需要一个小团队才能完成的工作。一种新型企业形态正在出现：一个高密度个体 + 一组 AI Agent + 一个清晰的垂直场景 = 一家一人公司。</p>
+    <p>OPC-Studio 要做的，是让这些优秀的 AI 原生小微企业被更多人看见。</p>
+    <div style="margin-top: 12px;">
+      <span class="audience-chip">OPC 企业</span><span class="audience-chip">企业客户</span><span class="audience-chip">投资人</span><span class="audience-chip">生态服务商</span>
+    </div>
+  </div>
+
+  <div class="col-feature">
+    <div class="flywheel-container">
+      <svg viewBox="0 0 300 300" class="flywheel-svg" aria-label="OPC-Studio 核心飞轮：入驻 → 展示 → 关注 → 合作 → 沉淀">
+        <circle class="fw-ring-bg" cx="150" cy="150" r="98"/>
+        <circle class="fw-ring-spin" cx="150" cy="150" r="98"/>
+
+        <line class="fw-edge" x1="150" y1="52" x2="240" y2="121"/>
+        <polygon class="fw-arrow" points="240,116 248,121 240,126"/>
+        <line class="fw-edge" x1="240" y1="121" x2="206" y2="227"/>
+        <polygon class="fw-arrow" points="201,221 206,235 211,221"/>
+        <line class="fw-edge" x1="206" y1="227" x2="94" y2="227"/>
+        <polygon class="fw-arrow" points="100,223 94,235 88,223"/>
+        <line class="fw-edge" x1="94" y1="227" x2="60" y2="121"/>
+        <polygon class="fw-arrow" points="65,126 57,121 65,116"/>
+        <line class="fw-edge" x1="60" y1="121" x2="150" y2="52"/>
+        <polygon class="fw-arrow" points="145,58 150,44 155,58"/>
+
+        <g class="fw-node fw-node-n0">
+          <circle cx="150" cy="52" r="4" stroke="currentColor" style="fill:var(--color-bg)"/>
+          <text class="fw-tag" x="150" y="24" font-family="var(--font-ui)" font-size="10" font-weight="500" fill="var(--color-fg)" text-anchor="middle" letter-spacing="0.15em">入驻</text>
+        </g>
+        <g class="fw-node fw-node-n1">
+          <circle cx="240" cy="121" r="4" stroke="currentColor" style="fill:var(--color-bg)"/>
+          <text class="fw-tag" x="248" y="110" font-family="var(--font-ui)" font-size="10" font-weight="500" fill="var(--color-fg)" text-anchor="start" letter-spacing="0.15em">展示</text>
+        </g>
+        <g class="fw-node fw-node-n2">
+          <circle cx="206" cy="227" r="4" stroke="currentColor" style="fill:var(--color-bg)"/>
+          <text class="fw-tag" x="210" y="248" font-family="var(--font-ui)" font-size="10" font-weight="500" fill="var(--color-fg)" text-anchor="middle" letter-spacing="0.15em">关注</text>
+        </g>
+        <g class="fw-node fw-node-n3">
+          <circle cx="94" cy="227" r="4" stroke="currentColor" style="fill:var(--color-bg)"/>
+          <text class="fw-tag" x="90" y="248" font-family="var(--font-ui)" font-size="10" font-weight="500" fill="var(--color-fg)" text-anchor="middle" letter-spacing="0.15em">合作</text>
+        </g>
+        <g class="fw-node fw-node-n4">
+          <circle cx="60" cy="121" r="4" stroke="currentColor" style="fill:var(--color-bg)"/>
+          <text class="fw-tag" x="46" y="110" font-family="var(--font-ui)" font-size="10" font-weight="500" fill="var(--color-fg)" text-anchor="end" letter-spacing="0.15em">沉淀</text>
+        </g>
+
+        <g class="fw-center">
+          <circle cx="150" cy="150" r="28"/>
+          <text class="fw-center-text" x="150" y="144">OPC</text>
+          <text class="fw-center-sub" x="150" y="160">飞 轮</text>
+        </g>
+      </svg>
+    </div>
+    <p style="font-family:var(--font-body);font-size:13px;line-height:1.7;text-align:left;color:var(--color-fg);">优秀 OPC 企业入驻被记录，深度内容与产品展示提升曝光，吸引客户与投资人关注，带来更多合作机会与优质流量，吸引更多 OPC 企业加入，沉淀更强企业数据库与行业影响力。</p>
+  </div>
+
+  <div class="col-ranking">
+    <h3>★ AI Skill 工坊</h3>
+    <ol class="mini-ranking">
+      <li><span class="idx">1</span><span class="name">投资人.skill</span><span class="status">v1.0.3</span></li>
+      <li><span class="idx">2</span><span class="name">路演者.skill</span><span class="status">v1.0.1</span></li>
+      <li><span class="idx">3</span><span class="name">纪要官.skill</span><span class="status">v2.0.0</span></li>
+      <li><span class="idx">4</span><span class="name">并购pitch.skill</span><span class="status">v1.0.0</span></li>
+      <li><span class="idx">5</span><span class="name">公报.skill</span><span class="status">v1.0.0</span></li>
+      <li><span class="idx">6</span><span class="name">一二.skill</span><span class="status">研发中</span></li>
+    </ol>
+  </div>
+</section>
+
+<div class="section-divider">
+  <div class="section-divider-inner">
+    <span class="rule"></span>
+    <span class="label">※ AI SKILL 工坊 ※</span>
+    <span class="rule"></span>
+  </div>
+  <div class="sub">让每个创业者都能把顶级专业工作流装进自己的 AI Agent</div>
+</div>
+
+<section class="skills-grid">
+  <div class="skill-card">
+    <span class="sc-emoji">🧭</span>
+    <h4 class="sc-name">investor-skill</h4>
+    <div class="sc-cn">投资人.skill</div>
+    <p class="sc-desc">一级市场职业投资人工作流：行业研究、项目尽调、BP 分析、竞争格局评估、投资备忘录撰写。</p>
+    <span class="sc-badge">v1.0.3 · 已发布</span>
+  </div>
+
+  <div class="skill-card">
+    <span class="sc-emoji">🎤</span>
+    <h4 class="sc-name">presenter-skill</h4>
+    <div class="sc-cn">路演者.skill</div>
+    <p class="sc-desc">创始人融资路演工作流：叙事打磨、市场机会结构化、产品数据通俗化、护城河论证、Q&A 应对。</p>
+    <span class="sc-badge">v1.0.1 · 已发布</span>
+  </div>
+
+  <div class="skill-card">
+    <span class="sc-emoji">📝</span>
+    <h4 class="sc-name">summary-skill</h4>
+    <div class="sc-cn">纪要官.skill</div>
+    <p class="sc-desc">投资经理访谈纪要官：关键事实抽取、主题归并、三档时间戳、覆盖核查、Markdown + docx 双格式输出。</p>
+    <span class="sc-badge">v2.0.0 · 已发布</span>
+  </div>
+
+  <div class="skill-card">
+    <span class="sc-emoji">📊</span>
+    <h4 class="sc-name">ma-pitch-skill</h4>
+    <div class="sc-cn">并购pitch.skill</div>
+    <p class="sc-desc">M&A 并购标的推介书：年报数据提取、多年财务分析、买方战略匹配矩阵、风险矩阵、整合路线图。</p>
+    <span class="sc-badge">v1.0.0 · 已发布</span>
+  </div>
+
+  <div class="skill-card">
+    <span class="sc-emoji">📰</span>
+    <h4 class="sc-name">gazette-skill</h4>
+    <div class="sc-cn">公报.skill</div>
+    <p class="sc-desc">古典公报/金融大报网站设计风格：粗衬线大标题、近单色黑白配色、报头元素、drop cap、中英双语规则。</p>
+    <span class="sc-badge">v1.0.0 · 已发布</span>
+  </div>
+
+  <div class="skill-card">
+    <span class="sc-emoji">💡</span>
+    <h4 class="sc-name">yi-er-skill</h4>
+    <div class="sc-cn">一二.skill</div>
+    <p class="sc-desc">AI companion / 关系陪伴 / 个体状态理解工作流。帮助用户建立更深层次的 AI 协作关系。</p>
+    <span class="sc-badge">研发中</span>
+  </div>
+</section>
+
+<div class="section-divider">
+  <div class="section-divider-inner">
+    <span class="rule"></span>
+    <span class="label">◆ PitchRoom ◆</span>
+    <span class="rule"></span>
+  </div>
+  <div class="sub">不是传统访谈，不是融资路演 —— 而是一次对 OPC 企业的结构化拆解</div>
+</div>
+
+<section class="pitch-section">
+  <div class="pitch-intro">
+    <p>我们把每个 OPC 企业看作一台正在运转的机器，通过 <strong>7 个问题</strong> 理解它的内部结构。这套「PitchRoom 七问」既是内容框架，也是企业展示、项目分析、客户匹配和数据库沉淀的基础协议。</p>
+  </div>
+  <table class="pitch-table">
+    <thead>
+      <tr><th>问题</th><th>核心提问</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>拆壳</td><td>你的一人公司从外面看是什么？从里面看呢？</td></tr>
+      <tr><td>引擎</td><td>AI 在你这里扮演什么角色？助手、合伙人，还是替身？</td></tr>
+      <tr><td>仪表盘</td><td>你每天盯着哪个数字？它现在是多少？</td></tr>
+      <tr><td>黑匣子</td><td>走到今天，哪个弯路差点让你死掉？</td></tr>
+      <tr><td>涡轮</td><td>如果给你十倍的用户，你的系统撑得住吗？</td></tr>
+      <tr><td>后视镜</td><td>回到起点，你会跳过什么、加速什么？</td></tr>
+      <tr><td>导航</td><td>十二个月后，你希望自己是什么样子？</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<footer class="footer">
+  <div class="footer-rule"></div>
+  <div class="footer-inner">
+    <div class="footer-section">
+      <div class="footer-label">关于平台</div>
+      <p>OPC-Studio 是一个服务 OPC（一人公司）生态的 AI 原生展示与连接平台。我们希望让优秀的一人公司被更多人看见，也让企业客户、投资人和生态伙伴更高效地发现可信赖的 OPC 服务商。</p>
+    </div>
+    <div class="footer-section">
+      <div class="footer-label">核心模块</div>
+      <a href="#showcase">企业展示</a>
+      <a href="#pitchroom">PitchRoom</a>
+      <a href="#aibox">AI 拆机器</a>
+      <a href="#skills">Skill 工坊</a>
+    </div>
+    <div class="footer-section">
+      <div class="footer-label">联系与加入</div>
+      <a href="#pitch" style="font-weight: 600;">投递项目 →</a>
+      <a href="https://github.com/D-kart/OPC-Studio">GitHub 仓库</a>
+      <a href="https://github.com/D-kart/gazette-skill">gazette-skill</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 OPC-STUDIO · 看见每一个一人公司</div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  try { localStorage.setItem('opcstudio-theme', next); } catch (e) {}
+}
+(function() {
+  try {
+    const saved = localStorage.getItem('opcstudio-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  } catch (e) {}
+})();
+</script>
+
+</body>
+</html>
