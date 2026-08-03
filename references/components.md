@@ -543,3 +543,171 @@ A small inline SVG used as decorative illustration. Black-and-white only.
 ```
 
 Replace with proper line-engraving assets for production. For ZH, swap to Shan Hai Jing or Song-dynasty plant motifs.
+
+## 10. Sticky sidebar + scrollspy (long documents)
+
+For long-form documents (curriculum, table of contents, research reports, tool directories), a sticky left sidebar keeps navigation always in view while the reader scrolls. Inspired by findmymoat.com's layout.
+
+```html
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">MAOSHU</div>
+    <div class="brand-sub">AI NATIVE INVESTMENT</div>
+    <div class="vol">VOL. NO. 01 · EDITION</div>
+
+    <div class="group-label">目录 · INDEX</div>
+    <ul class="nav">
+      <li><a href="#top"><span class="num">▸</span>课程首页</a></li>
+      <li><a href="#gains"><span class="num">▸</span>课程收获</a></li>
+    </ul>
+
+    <div class="group-label">模块一 · MINDSET</div>
+    <ul class="nav">
+      <li><a class="sub" href="#c01"><span class="num">01</span>AI 能力边界</a></li>
+      <li><a class="sub" href="#c02"><span class="num">02</span>工具矩阵</a></li>
+    </ul>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="#top" onclick="event.preventDefault(); window.print();">下载</a>
+      <button class="btn btn-secondary" id="contactBtn" type="button">联系</button>
+    </div>
+  </aside>
+
+  <main class="page" id="top">
+    <!-- masthead + content sections, each with id="c01", "c02", ... -->
+  </main>
+</div>
+```
+
+```css
+.layout {
+  display: flex; gap: 32px;
+  max-width: 1320px; margin: 0 auto;
+  padding: 40px 32px 64px;
+  align-items: flex-start;
+}
+.sidebar {
+  width: 220px; flex-shrink: 0;
+  position: sticky; top: 24px;
+  align-self: flex-start;
+  max-height: calc(100vh - 48px); overflow-y: auto;
+  font-family: var(--font-ui);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-rule-soft) transparent;
+}
+.sidebar .brand {
+  font-family: var(--font-display); font-weight: 900; font-size: 22px;
+  letter-spacing: 0.02em; padding-bottom: 4px;
+  border-bottom: 2px solid var(--color-fg);
+}
+.sidebar .brand-sub {
+  font-family: var(--font-ui); font-size: 10.5px; font-weight: 600;
+  letter-spacing: 0.22em; color: var(--color-muted); margin-top: 6px;
+}
+.sidebar .vol {
+  margin-top: 14px; font-family: var(--font-ui); font-size: 10.5px;
+  letter-spacing: 0.18em; color: var(--color-muted);
+  padding-bottom: 12px; border-bottom: 1px solid var(--color-rule-soft);
+}
+.sidebar .group-label {
+  font-family: var(--font-ui); font-size: 10.5px; font-weight: 600;
+  letter-spacing: 0.24em; color: var(--color-muted);
+  margin: 18px 0 8px;
+}
+.sidebar ul.nav { list-style: none; }
+.sidebar ul.nav li { margin-bottom: 2px; }
+.sidebar ul.nav a {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 6px 8px; color: var(--color-fg); text-decoration: none;
+  font-size: 12.5px; line-height: 1.5;
+  transition: background 0.2s, color 0.2s;
+  border-left: 2px solid transparent;
+}
+.sidebar ul.nav a:hover {
+  background: var(--color-bg-card);
+  border-left-color: var(--color-fg);
+}
+.sidebar ul.nav a.active {
+  background: var(--color-bg-card);
+  border-left-color: var(--color-fg);
+  font-weight: 600;
+}
+.sidebar ul.nav a .num {
+  font-family: var(--font-display); font-weight: 700; color: var(--color-muted);
+  font-size: 11px; min-width: 22px;
+}
+.sidebar ul.nav a.sub { padding-left: 28px; font-size: 12px; color: var(--color-muted); }
+.sidebar .actions {
+  margin-top: 24px; padding-top: 18px;
+  border-top: 1px solid var(--color-rule-soft);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.sidebar .actions .btn {
+  display: block; padding: 9px 14px; text-align: center;
+  font-family: var(--font-ui); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.2em; text-decoration: none;
+  border-radius: 2px; transition: background 0.2s, color 0.2s;
+}
+.sidebar .actions .btn-primary {
+  background: var(--color-accent); color: var(--color-on-accent);
+}
+.sidebar .actions .btn-secondary {
+  background: transparent; color: var(--color-fg); border: 1px solid var(--color-fg);
+  cursor: pointer;
+}
+.page { flex: 1; min-width: 0; max-width: 1020px; }
+
+/* mobile: sidebar collapses to top of page */
+@media (max-width: 980px) {
+  .layout { flex-direction: column; padding: 28px 20px 48px; }
+  .sidebar { position: relative; top: 0; width: 100%; max-height: none; margin-bottom: 16px; }
+}
+@media print {
+  .sidebar { display: none; }
+  .layout { display: block; }
+  .page { max-width: 100%; }
+}
+```
+
+```js
+/* smooth scroll + scrollspy highlight */
+(function() {
+  var sidebarLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+  sidebarLinks.forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var href = a.getAttribute('href');
+      if (href === '#top') { e.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'}); return; }
+      var target = document.querySelector(href);
+      if (target) { e.preventDefault(); target.scrollIntoView({behavior: 'smooth', block: 'start'}); }
+    });
+  });
+  var sections = document.querySelectorAll('main .section-divider[id], main [id^="c"]');
+  var linkMap = {};
+  sidebarLinks.forEach(function(a) {
+    var h = a.getAttribute('href');
+    if (h && h.length > 1) linkMap[h] = a;
+  });
+  function clearActive() {
+    sidebarLinks.forEach(function(a) { a.classList.remove('active'); });
+  }
+  function setActive(id) {
+    clearActive();
+    var link = linkMap['#' + id];
+    if (link) link.classList.add('active');
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(en) {
+        if (en.isIntersecting && en.intersectionRatio > 0.15) setActive(en.target.id);
+      });
+    }, {rootMargin: '-20% 0px -60% 0px', threshold: [0, 0.15, 0.5, 1]});
+    sections.forEach(function(s) { if (s.id) io.observe(s); });
+  }
+})();
+```
+
+Notes:
+- Add `[id] { scroll-margin-top: 16px; }` and `html { scroll-behavior: smooth; }` globally so anchor jumps land with breathing room.
+- The `.sub` class indents sub-entries (per-module lessons); remove it for flat nav.
+- The bottom `.actions` pair (primary + secondary button) works for any CTA: print/save, contact, sign in, etc.
+- This component pairs with #1 Masthead and #8 Footer to form a complete long-document template.
