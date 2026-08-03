@@ -6,7 +6,7 @@ compatibility: 纯 HTML/CSS 技能，无运行时依赖；可选 CDN 字体（Go
 metadata:
   chinese-name: 公报.skill
   author: OPC-Studio
-  version: 1.0.0
+  version: 1.1.0
   category: web-design
   reference_site: https://www.findmymoat.com
   style_positioning: "Classical gazette + financial broadsheet"
@@ -101,6 +101,7 @@ Read `references/components.md` for ready-to-copy HTML/CSS snippets of the most 
 - Article hero (two-line title + italic subtitle + drop cap body)
 - Search input + filter bar
 - Footer
+- **Sticky sidebar + scrollspy** (left nav with smooth-scroll anchor jumps + IntersectionObserver highlight; pairs with masthead/footer for long documents)
 
 ### 4. Use the starter template
 
@@ -147,6 +148,11 @@ Before delivering, self-check against this list:
 - `assets/starter-template.html` — copy-and-customize HTML starter
 - `assets/screenshot-home.png` — reference site homepage
 - `assets/screenshot-ranking.png` — reference site ranking page
+
+## Version History
+
+- **v1.1.0** — added `references/components.md` #10: Sticky sidebar + scrollspy (long documents); left nav with anchor smooth-scroll, IntersectionObserver highlight, mobile collapse, print hiding, bottom CTA buttons. Use for curricula, TOCs, research reports, tool directories.
+- **v1.0.0** — initial public release: design system, ZH localization rules, 9 components, starter template, day/night toggle.
 
 ## Adaptation Notes
 
