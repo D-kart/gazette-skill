@@ -22,8 +22,9 @@
 | 2 | **Curated Directory 列表页** | 两列网格卡片（logo + 名字 + 标签 pills + 投票 + 操作） |
 | 3 | **排行榜表格页** | 密集表格（小标大写宽字距 + 衬线数字 + 涨跌色） |
 | 4 | **文章页** | 双行超大标题 + 斜体副标 + drop cap 首字下沉 + section divider |
-| 5 | **中文化重建** | 中文报纸风（思源宋体 + 宽字距替代大写 + 宣纸米色 + 红涨绿跌） |
-| 6 | **起始模板复用** | `assets/starter-template.html` 一键起步，含昼夜主题切换 |
+| 5 | **长文档侧边栏导航** | 左侧 sticky sidebar + 锚点平滑跳转 + 滚动高亮（课程表/目录/研究报告） |
+| 6 | **中文化重建** | 中文报纸风（思源宋体 + 宽字距替代大写 + 宣纸米色 + 红涨绿跌） |
+| 7 | **起始模板复用** | `assets/starter-template.html` 一键起步，含昼夜主题切换 |
 
 ---
 
@@ -41,6 +42,7 @@
 - 📜 Playfair Display 粗衬线大标题 + Source Serif Pro 正文（中文：思源宋体 Heavy + Regular）
 - 📋 Masthead 报头：`VOL. XCIV, NO. 247` + 黑色日期横条 + 三等距标签
 - 📊 密集表格：小标全大写宽字距 + 衬线粗体数字 + tabular-nums
+- 🧭 长文档侧边栏：sticky sidebar + 锚点平滑跳转 + 滚动高亮（课程表/目录/研究报告）
 - ✒️ Drop cap 首字下沉 4.5x（中文 3x）+ ★ 装饰星号 + 黑白线描插画
 - 🌗 内置昼夜主题切换按钮（右上角固定定位，localStorage 持久化）
 
@@ -80,7 +82,7 @@ gazette-skill/
 └── references/                       # 📚 REFERENCES 具体规范
     ├── design-system.md              # 完整设计系统（字体/配色/布局/视觉）
     ├── localization-zh.md            # 中文化重建规则（中文站必读）
-    └── components.md                 # HTML/CSS 组件配方（9 个组件）
+    └── components.md                 # HTML/CSS 组件配方（10 个组件）
 ```
 
 > 三层架构：**META**（SKILL.md frontmatter）· **ASSETS**（assets/ 资产真源）· **REFERENCES**（references/ 具体规范）。
@@ -146,7 +148,7 @@ MIT License · © 2026 OPC-Studio
 
 - Issue / PR：欢迎在本仓库提交
 - 兼容问题：请附上平台名与 Agent 版本号
-- 风格扩展：期待更多组件配方（如移动端适配、打印样式、邮件模板）的贡献
+- 风格扩展：期待更多组件配方（如移动端适配、打印样式、邮件模板、弹窗/模态框）的贡献
 
 ---
 
